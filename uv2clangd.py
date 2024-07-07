@@ -13,11 +13,16 @@ cmds_path = "D:\embed_doc\h743\h743tool\STM32H743VIT6_DEMO_25M XTAL\LCD_1.14inch
 def find_uvprojx(directory):
     # 使用glob模块搜索指定目录及其子目录中的所有.uvprojx文件
     uvprojx_files = glob.glob(os.path.join(directory, '**', '*.uvprojx'), recursive=True)
+    print(f'find {uvprojx_files}')
     return uvprojx_files
 
-uvprojx_files = find_uvprojx('./')
+
+# 调用函数并打印找到的.txt文件列表
+uvprojx_files = find_uvprojx(os.getcwd())
+uvprojx_files = sorted(uvprojx_files, key=lambda x: x.count(os.sep))
 for file in uvprojx_files:
     uv_path = os.path.abspath(file)
+    print(f'process {uv_path}')
     break
 
 
@@ -72,4 +77,3 @@ with open('compile_commands.json', 'w') as f:
     json.dump(cmds, f, indent=4)
 
 print("compile_commands.json 文件已创建")
-
